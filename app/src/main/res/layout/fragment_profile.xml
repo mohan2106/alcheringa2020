@@ -19,8 +19,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="20dp">
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/profile_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"
+                app:civ_border_color="#ffff"
+                app:civ_border_width="0dp"
+                android:layout_alignParentTop="true"/>
 
             <TextView
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/profile_image"
                 android:id="@+id/profile_name"
                 style="@style/textBold"
                 android:layout_width="match_parent"
