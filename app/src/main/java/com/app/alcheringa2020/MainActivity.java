@@ -1,6 +1,7 @@
 package com.app.alcheringa2020;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,7 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.app.alcheringa2020.base.BaseActivity;
 import com.app.alcheringa2020.events.EventsFragment;
 import com.app.alcheringa2020.feed.FeedFragment;
+import com.app.alcheringa2020.notification.NotificationFragment;
+import com.app.alcheringa2020.profile.ProfileFragment;
 import com.app.alcheringa2020.schedule.ScheduleFragment;
+import com.app.alcheringa2020.search.SearchActivity;
 import com.app.alcheringa2020.support.SupportFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,7 +33,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     Fragment fragment;
     String currentFragment;
     BottomNavigationView navigationView;
-    ImageView main_logo, noti_image, profile_image, back_image;
+    ImageView main_logo, noti_image, profile_image, back_image, search_image;
     TextView nav_title;
 
 
@@ -37,6 +41,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        search_image = findViewById(R.id.search_image);
         back_image = findViewById(R.id.back_image);
         noti_image = findViewById(R.id.noti_image);
         profile_image = findViewById(R.id.profile_image);
@@ -47,6 +52,43 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         fragment = FeedFragment.newInstance(context);
         currentFragment = "FeedFragment";
         setFragment(fragment);
+        initListner();
+    }
+
+    private void initListner() {
+        try {
+            noti_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fragment = NotificationFragment.newInstance(context);
+                    currentFragment = "NotificationFragment";
+                    setFragment(fragment);
+                    nav_title.setText(R.string.notifications);
+                    showHide();
+                }
+            });
+            search_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent  = new Intent(context, SearchActivity.class);
+                    startActivity(intent);
+                }
+            });
+            profile_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fragment = ProfileFragment.newInstance(context);
+                    currentFragment = "ProfileFragment";
+                    setFragment(fragment);
+                    nav_title.setText(R.string.profile);
+                    showHide();
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setFragment(Fragment fragment) {
@@ -103,6 +145,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         noti_image.setVisibility(View.GONE);
         back_image.setVisibility(View.VISIBLE);
         nav_title.setVisibility(View.VISIBLE);
+        if (currentFragment.equalsIgnoreCase("EventsFragment") || currentFragment.equalsIgnoreCase("NotificationFragment")) {
+            search_image.setVisibility(View.VISIBLE);
+        } else {
+            search_image.setVisibility(View.GONE);
+        }
     }
 
 

@@ -23,6 +23,7 @@
             android:textColor="@color/Bronze"
             app:layout_constraintTop_toTopOf="parent"/>
         <LinearLayout
+            android:id="@+id/timeLyt"
             app:layout_constraintTop_toBottomOf="@+id/eventTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

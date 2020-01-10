@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".events.EventActivity" />
+        <activity android:name=".search.SearchActivity"/>
     </application>
 
 </manifest>

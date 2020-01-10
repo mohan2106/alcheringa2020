@@ -36,6 +36,7 @@ public class EventActivity extends BaseActivity implements EventListner {
     int eventId;
     ArrayList<ItemModel> itemModelArrayList;
     RuleAdapter ruleAdapter;
+    LinearLayout registerLyt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class EventActivity extends BaseActivity implements EventListner {
     }
 
     private void initView() {
+        registerLyt = findViewById(R.id.registerLyt);
         text_title = findViewById(R.id.text_title);
         competitionTxt = findViewById(R.id.competitionTxt);
         event_data = findViewById(R.id.event_data);
@@ -137,6 +139,12 @@ public class EventActivity extends BaseActivity implements EventListner {
                     prelimsDescription.setVisibility(View.GONE);
                     finalsDescription.setVisibility(View.GONE);
                     judgeRecycler.setVisibility(View.VISIBLE);
+                }
+            });
+            registerLyt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
                 }
             });
 

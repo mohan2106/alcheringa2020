@@ -94,7 +94,7 @@
                 android:layout_weight="1">
 
                 <RelativeLayout
-                    android:id="@+id/hospitality_trl"
+                    android:id="@+id/hospitality_rlt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

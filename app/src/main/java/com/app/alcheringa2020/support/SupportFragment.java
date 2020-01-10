@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.base.BaseFragment;
@@ -19,6 +20,7 @@ public class SupportFragment extends BaseFragment {
     static SupportFragment fragment;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
+    RelativeLayout profile_rlt;
 
     public SupportFragment() {
         //blank Constructor
@@ -40,6 +42,16 @@ public class SupportFragment extends BaseFragment {
         fragment_container = container;
         context = getActivity().getApplicationContext();
         view = inflater.inflate(R.layout.fragment_support, container, false);
+        initListner();
         return view;
+    }
+
+    private void initListner() {
+        profile_rlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

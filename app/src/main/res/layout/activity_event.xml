@@ -209,10 +209,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Register" />
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

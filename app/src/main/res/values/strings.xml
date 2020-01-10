@@ -3,6 +3,8 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="feed">Feed</string>
     <string name="events">Events</string>
+    <string name="profile">My Profile</string>
+    <string name="notifications">Notifications</string>
     <string name="schedule">Schedule</string>
     <string name="support">Support</string>
 </resources>
