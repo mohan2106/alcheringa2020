@@ -1,6 +1,7 @@
 package com.app.alcheringa2020.events;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,8 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
     public void onBindViewHolder(EventDetailAdapter.ViewHolder holder, int position) {
         holder.child_textView.setText(itemModelArrayList.get(position).getItem());
         holder.eventId = itemModelArrayList.get(position).getItemId();
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.child_textView.setTypeface(typeface);
     }
 
     @Override

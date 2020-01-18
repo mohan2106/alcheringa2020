@@ -1,6 +1,7 @@
 package com.app.alcheringa2020.notification;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.external.SwipeToDeleteCallback;
-import com.app.alcheringa2020.notification.model.NotiDetailModel;
 import com.app.alcheringa2020.notification.model.NotificationModel;
-import com.app.alcheringa2020.schedule.ScheduleChildAdapter;
-import com.app.alcheringa2020.schedule.ScheduleDataAdapter;
-import com.app.alcheringa2020.schedule.model.ScheduleModel;
 
 import java.util.ArrayList;
 
@@ -51,7 +48,7 @@ public class NotificationDataAdapter extends RecyclerView.Adapter<NotificationDa
 
     @Override
     public NotificationDataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_schedule, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_my_schedule, parent, false);
         return new NotificationDataAdapter.ViewHolder(view);
     }
 
@@ -64,6 +61,8 @@ public class NotificationDataAdapter extends RecyclerView.Adapter<NotificationDa
         holder.rv_child.setLayoutManager(new LinearLayoutManager(mContext));
         holder.rv_child.setAdapter(notificationChildAdapter);
         enableSwipeToDeleteAndUndo(notificationChildAdapter, holder);
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.title_text.setTypeface(typeface);
     }
 
     private void enableSwipeToDeleteAndUndo(final NotificationChildAdapter mAdapter, NotificationDataAdapter.ViewHolder holder) {

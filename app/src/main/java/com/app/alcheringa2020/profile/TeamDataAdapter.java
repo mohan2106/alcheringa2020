@@ -1,23 +1,16 @@
 package com.app.alcheringa2020.profile;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.alcheringa2020.R;
-import com.app.alcheringa2020.external.SwipeToDeleteCallback;
 import com.app.alcheringa2020.profile.model.TeamModel;
-import com.app.alcheringa2020.schedule.ScheduleChildAdapter;
-import com.app.alcheringa2020.schedule.ScheduleDataAdapter;
-import com.app.alcheringa2020.schedule.model.ScheduleModel;
 
 import java.util.ArrayList;
 
@@ -62,6 +55,9 @@ public class TeamDataAdapter extends RecyclerView.Adapter<TeamDataAdapter.ViewHo
         TeamModel teamModel = teamModelArrayList.get(position);
         holder.member_name.setText(teamModel.getName());
         holder.member_code.setText("#"+teamModel.getCode());
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.member_name.setTypeface(typeface);
+        holder.member_code.setTypeface(typeface);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.app.alcheringa2020.events;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class EventDataAdapter extends RecyclerView.Adapter<EventDataAdapter.View
     @Override
     public EventDataAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_event, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -53,9 +55,13 @@ public class EventDataAdapter extends RecyclerView.Adapter<EventDataAdapter.View
         holder.position_data = position;
         ProgrammeModel programmeModel = programmeModelArrayList.get(position);
         holder.title_text.setText(programmeModelArrayList.get(position).getProCategory());
+
         EventHorizontalAdapter itemAdapter = new EventHorizontalAdapter(mContext, programmeModel.getItemModelArrayList(),programmeModel.getProId(),programmeModel.getProCategory());
         holder.rv_child.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         holder.rv_child.setAdapter(itemAdapter);
+
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.title_text.setTypeface(typeface);
     }
 
     @Override

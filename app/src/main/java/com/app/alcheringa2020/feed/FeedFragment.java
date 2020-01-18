@@ -41,6 +41,4 @@ public class FeedFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_feed, container, false);
         return view;
     }
-
-
 }

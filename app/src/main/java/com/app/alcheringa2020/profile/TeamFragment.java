@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.base.BaseFragment;
-import com.app.alcheringa2020.feed.FeedFragment;
 import com.app.alcheringa2020.profile.model.TeamModel;
-import com.app.alcheringa2020.schedule.ScheduleDataAdapter;
-import com.app.alcheringa2020.schedule.ScheduleDataModel;
 
 import java.util.ArrayList;
 

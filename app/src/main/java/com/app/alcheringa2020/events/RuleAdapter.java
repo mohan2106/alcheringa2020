@@ -1,6 +1,7 @@
 package com.app.alcheringa2020.events;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,8 @@ public class RuleAdapter extends RecyclerView.Adapter<RuleAdapter.ViewHolder> {
             JudgeModel judgeModel = judgeModelArrayList.get(position);
             holder.ruleTxt.setText(Integer.toString(position + 1) + ". " + judgeModel.getJudgeCriteria());
         }
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.ruleTxt.setTypeface(typeface);
 
     }
 

@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/ruleTxt"
         style="@style/textDescription"
         android:layout_width="match_parent"

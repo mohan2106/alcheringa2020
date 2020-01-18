@@ -2,6 +2,7 @@ package com.app.alcheringa2020.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.events.model.ItemModel;
+import com.app.alcheringa2020.external.PrefManager;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ public class EventHorizontalAdapter extends RecyclerView.Adapter<EventHorizontal
     Context mContext;
     int typeInt;
     String programmeCategory;
+    PrefManager prefManager;
 
     public EventHorizontalAdapter(Context context, ArrayList<ItemModel> itemModelArrayList1,int position,String programmeCategory) {
         this.itemModelArrayList = itemModelArrayList1;
@@ -54,6 +57,7 @@ public class EventHorizontalAdapter extends RecyclerView.Adapter<EventHorizontal
 
     @Override
     public void onBindViewHolder(final EventHorizontalAdapter.ViewHolder holder,final int position) {
+
         holder.child_textView.setText(itemModelArrayList.get(position).getItem());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +69,9 @@ public class EventHorizontalAdapter extends RecyclerView.Adapter<EventHorizontal
                 mContext.startActivity(intent);
             }
         });
+
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.child_textView.setTypeface(typeface);
     }
 
     @Override

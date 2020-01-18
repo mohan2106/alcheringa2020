@@ -17,7 +17,7 @@
             android:id="@+id/profile_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/profile"
             app:civ_border_color="#ffff"
             app:civ_border_width="0dp" />
 
@@ -30,6 +30,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/member_name"
                 style="@style/textBold"
                 android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
                 android:text="Priyanshu Jain" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/member_code"
                 style="@style/textDescriptionBold"
                 android:layout_width="match_parent"

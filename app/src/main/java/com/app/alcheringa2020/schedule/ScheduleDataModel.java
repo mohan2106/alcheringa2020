@@ -9,6 +9,7 @@ import com.app.alcheringa2020.events.model.ProgrammeModel;
 import com.app.alcheringa2020.events.model.RuleModel;
 import com.app.alcheringa2020.schedule.model.EventModel;
 import com.app.alcheringa2020.schedule.model.ScheduleModel;
+import com.app.alcheringa2020.schedule.model.VanueModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,20 +31,31 @@ public class ScheduleDataModel {
                 int id = sceduleJsonObject.getInt("id");
                 String day = sceduleJsonObject.getString("day");
                 String date = sceduleJsonObject.getString("date");
-                ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
-                JSONArray eventArray = sceduleJsonObject.getJSONArray("event");
-                for (int j = 0; j < eventArray.length(); j++) {
-                    JSONObject eventObject = eventArray.getJSONObject(j);
-                    int eventId = eventObject.getInt("id");
-                    String event_name = eventObject.getString("event_name");
-                    String venue = eventObject.getString("venue");
-                    String start_time = eventObject.getString("start_time");
-                    String end_time = eventObject.getString("end_time");
+                ArrayList<VanueModel> vanueModelArrayList = new ArrayList<>();
+                JSONArray vanuetArray = sceduleJsonObject.getJSONArray("venue");
+                for (int j = 0; j < vanuetArray.length(); j++) {
+                    JSONObject vanuetObject = vanuetArray.getJSONObject(j);
+                    int vanueId = vanuetObject.getInt("id");
+                    String venue_name = vanuetObject.getString("venue_name");
 
-                    eventModelArrayList.add(new EventModel(eventId, event_name, venue, start_time, end_time));
 
+                    ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
+                    JSONArray eventArray = vanuetObject.getJSONArray("event");
+                    for (int k = 0; k < eventArray.length(); k++) {
+                        JSONObject eventObject = eventArray.getJSONObject(k);
+                        int eventId = eventObject.getInt("id");
+                        String event_name = eventObject.getString("event_name");
+                        String start_time = eventObject.getString("start_time");
+                        String end_time = eventObject.getString("end_time");
+                        String vanue = eventObject.getString("venue_name");
+
+                        eventModelArrayList.add(new EventModel(eventId, event_name, start_time, end_time,vanue));
+
+                    }
+                    vanueModelArrayList.add(new VanueModel(vanueId, venue_name, eventModelArrayList));
                 }
-                scheduleModelArrayList.add(new ScheduleModel(id, day, date, eventModelArrayList));
+
+                scheduleModelArrayList.add(new ScheduleModel(id, day, date, vanueModelArrayList));
 
             }
             return scheduleModelArrayList;

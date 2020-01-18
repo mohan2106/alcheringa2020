@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.base.BaseFragment;
-import com.app.alcheringa2020.schedule.ScheduleFragment;
 
 /**
  * Created by Jiaur Rahman on 31-Dec-19.
@@ -47,11 +46,5 @@ public class SupportFragment extends BaseFragment {
     }
 
     private void initListner() {
-        profile_rlt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 }

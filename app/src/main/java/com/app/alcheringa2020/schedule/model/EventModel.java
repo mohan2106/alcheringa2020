@@ -5,14 +5,14 @@ package com.app.alcheringa2020.schedule.model;
  */
 public class EventModel {
     int id;
-    String event_name,venue,start_time,end_time;
+    String event_name,start_time,end_time,venue_name;
 
-    public EventModel(int id, String event_name, String venue, String start_time, String end_time) {
+    public EventModel(int id, String event_name, String start_time, String end_time, String venue_name) {
         this.id = id;
         this.event_name = event_name;
-        this.venue = venue;
         this.start_time = start_time;
         this.end_time = end_time;
+        this.venue_name = venue_name;
     }
 
     public int getId() {
@@ -31,14 +31,6 @@ public class EventModel {
         this.event_name = event_name;
     }
 
-    public String getVenue() {
-        return venue;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
     public String getStart_time() {
         return start_time;
     }
@@ -53,5 +45,13 @@ public class EventModel {
 
     public void setEnd_time(String end_time) {
         this.end_time = end_time;
+    }
+
+    public String getVenue_name() {
+        return venue_name;
+    }
+
+    public void setVenue_name(String venue_name) {
+        this.venue_name = venue_name;
     }
 }

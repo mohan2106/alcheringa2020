@@ -1,7 +1,7 @@
 package com.app.alcheringa2020.notification;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.alcheringa2020.R;
 import com.app.alcheringa2020.notification.model.NotiDetailModel;
-import com.app.alcheringa2020.notification.model.NotificationModel;
-import com.app.alcheringa2020.schedule.ScheduleChildAdapter;
-import com.app.alcheringa2020.schedule.model.EventModel;
 
 import java.util.ArrayList;
 
@@ -33,13 +30,16 @@ public class NotificationChildAdapter extends RecyclerView.Adapter<NotificationC
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView eventTxt;
+        public TextView noti;
+        public TextView eventTxt,time;
         LinearLayout timeLyt;
 
         public ViewHolder(View v) {
             super(v);
+            noti = (TextView)v.findViewById(R.id.venueTxt);
             eventTxt = (TextView) v.findViewById(R.id.eventTxt);
             timeLyt = (LinearLayout) v.findViewById(R.id.timeLyt);
+            time = v.findViewById(R.id.timeTxt);
         }
     }
 
@@ -53,16 +53,21 @@ public class NotificationChildAdapter extends RecyclerView.Adapter<NotificationC
     }
     @Override
     public NotificationChildAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_schedule_child, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_my_schedule_child, parent, false);
         return new NotificationChildAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final NotificationChildAdapter.ViewHolder holder, final int position) {
         NotiDetailModel notiDetailModel = notiDetailModelArrayList.get(position);
-        holder.eventTxt.setText(notiDetailModel.getMessage());
-        holder.timeLyt.setVisibility(View.GONE);
-        holder.eventTxt.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+        holder.noti.setText(notiDetailModel.getMessage());
+        holder.eventTxt.setText(notiDetailModel.getTitle());
+        holder.time.setVisibility(View.GONE);
+//        holder.timeLyt.setVisibility(View.GONE);
+//        holder.eventTxt.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/exo_regular.ttf");
+        holder.eventTxt.setTypeface(typeface);
     }
 
     @Override

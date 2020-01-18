@@ -1,31 +1,48 @@
 package com.app.alcheringa2020;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.alcheringa2020.base.BaseActivity;
 import com.app.alcheringa2020.events.EventsFragment;
+import com.app.alcheringa2020.external.PrefManager;
 import com.app.alcheringa2020.feed.FeedFragment;
 import com.app.alcheringa2020.notification.NotificationFragment;
 import com.app.alcheringa2020.profile.ProfileFragment;
+import com.app.alcheringa2020.schedule.MyScheduleFragment;
 import com.app.alcheringa2020.schedule.ScheduleFragment;
 import com.app.alcheringa2020.search.SearchActivity;
 import com.app.alcheringa2020.support.SupportFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -33,26 +50,67 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     Fragment fragment;
     String currentFragment;
     BottomNavigationView navigationView;
-    ImageView main_logo, noti_image, profile_image, back_image, search_image;
-    TextView nav_title;
+    public static ImageView main_logo, noti_image, profile_image, back_image, search_image, add_image, fav_image;
+    public static TextView nav_title;
+    public static RelativeLayout noti_rlt;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("mohan");
+
+
+    public static final String CHANNEL_ID = "mohan";
+    private static final String CHANNEL_NAME = "mohan";
+    private static final String CHANNEL_DESC = "mohan notification";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(CHANNEL_DESC);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic("music");
+        FirebaseMessaging.getInstance().subscribeToTopic("game");
+        FirebaseMessaging.getInstance().subscribeToTopic("dance");
+        FirebaseMessaging.getInstance().subscribeToTopic("fineart");
+        FirebaseMessaging.getInstance().subscribeToTopic("general");
         search_image = findViewById(R.id.search_image);
         back_image = findViewById(R.id.back_image);
         noti_image = findViewById(R.id.noti_image);
         profile_image = findViewById(R.id.profile_image);
         main_logo = findViewById(R.id.main_logo);
+        fav_image = findViewById(R.id.fav_image);
         nav_title = findViewById(R.id.nav_title);
+        noti_rlt = findViewById(R.id.noti_rlt);
         navigationView = findViewById(R.id.bottomNavigationView);
+        add_image = findViewById(R.id.add_image);
         navigationView.setOnNavigationItemSelectedListener(this);
         fragment = FeedFragment.newInstance(context);
         currentFragment = "FeedFragment";
         setFragment(fragment);
+
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);
+
+// Add a new document with a generated ID
+        reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Successfull", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         initListner();
+
     }
 
     private void initListner() {
@@ -70,7 +128,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             search_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent  = new Intent(context, SearchActivity.class);
+                    Intent intent = new Intent(context, SearchActivity.class);
                     startActivity(intent);
                 }
             });
@@ -81,6 +139,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     currentFragment = "ProfileFragment";
                     setFragment(fragment);
                     nav_title.setText(R.string.profile);
+                    showHide();
+                }
+            });
+            fav_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fragment = MyScheduleFragment.newInstance(context);
+                    currentFragment = "MyScheduleFragment";
+                    setFragment(fragment);
+                    nav_title.setText("My Schedule");
                     showHide();
                 }
             });
@@ -105,14 +173,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         Log.d(TAG, "item id: " + menuItem.getItemId());
         switch (menuItem.getItemId()) {
             case R.id.nav_feed:
-                fragment = FeedFragment.newInstance(context);
-                currentFragment = "FeedFragment";
-                main_logo.setVisibility(View.VISIBLE);
-                back_image.setVisibility(View.GONE);
-                noti_image.setVisibility(View.VISIBLE);
-                nav_title.setVisibility(View.GONE);
-                profile_image.setVisibility(View.VISIBLE);
-                setFragment(fragment);
+                feedFragment();
                 break;
             case R.id.nav_events:
                 fragment = EventsFragment.newInstance(context);
@@ -125,7 +186,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 fragment = ScheduleFragment.newInstance(context);
                 currentFragment = "ScheduleFragment";
                 setFragment(fragment);
-                nav_title.setText("My Schedule");
+                nav_title.setText(R.string.schedule);
                 showHide();
                 break;
             case R.id.nav_support:
@@ -139,6 +200,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         return false;
     }
 
+    private void feedFragment() {
+        fragment = FeedFragment.newInstance(context);
+        currentFragment = "FeedFragment";
+        main_logo.setVisibility(View.VISIBLE);
+        back_image.setVisibility(View.GONE);
+        noti_image.setVisibility(View.VISIBLE);
+        nav_title.setVisibility(View.GONE);
+        profile_image.setVisibility(View.VISIBLE);
+        search_image.setVisibility(View.GONE);
+        add_image.setVisibility(View.GONE);
+        noti_rlt.setVisibility(View.VISIBLE);
+        setFragment(fragment);
+    }
+
     private void showHide() {
         profile_image.setVisibility(View.GONE);
         main_logo.setVisibility(View.GONE);
@@ -149,6 +224,23 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             search_image.setVisibility(View.VISIBLE);
         } else {
             search_image.setVisibility(View.GONE);
+        }
+
+        if (currentFragment.equalsIgnoreCase("TeamFragment")) {
+            add_image.setVisibility(View.VISIBLE);
+        } else {
+            add_image.setVisibility(View.GONE);
+        }
+        if (currentFragment.equalsIgnoreCase("ProfileFragment") || currentFragment.equalsIgnoreCase("MyScheduleFragment") || currentFragment.equalsIgnoreCase("SupportFragment")) {
+            noti_rlt.setVisibility(View.INVISIBLE);
+        } else {
+            noti_rlt.setVisibility(View.VISIBLE);
+        }
+
+        if (currentFragment.equalsIgnoreCase("ScheduleFragment")) {
+            fav_image.setVisibility(View.VISIBLE);
+        } else {
+            fav_image.setVisibility(View.GONE);
         }
     }
 
@@ -163,7 +255,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             try {
                 new AlertDialog.Builder(this)
                         .setTitle("Confirm")
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.logo_dark)
                         .setMessage("Do you really want to exit?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -176,18 +268,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 e.printStackTrace();
             }
         } else {
-            fragment = FeedFragment.newInstance(context);
-            currentFragment = "FeedFragment";
-            main_logo.setVisibility(View.VISIBLE);
-            back_image.setVisibility(View.GONE);
-            noti_image.setVisibility(View.VISIBLE);
-            nav_title.setVisibility(View.GONE);
-            profile_image.setVisibility(View.VISIBLE);
-            setFragment(fragment);
+            feedFragment();
         }
     }
 
     public void backOption(View view) {
         exitApp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        feedFragment();
     }
 }

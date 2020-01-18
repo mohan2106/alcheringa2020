@@ -8,13 +8,13 @@ import java.util.ArrayList;
 public class ScheduleModel {
     int id;
     String day,date;
-    ArrayList<EventModel> eventModelArrayList;
+    ArrayList<VanueModel> vanueModelArrayList;
 
-    public ScheduleModel(int id, String day, String date, ArrayList<EventModel> eventModelArrayList) {
+    public ScheduleModel(int id, String day, String date, ArrayList<VanueModel> vanueModelArrayList) {
         this.id = id;
         this.day = day;
         this.date = date;
-        this.eventModelArrayList = eventModelArrayList;
+        this.vanueModelArrayList = vanueModelArrayList;
     }
 
     public int getId() {
@@ -41,11 +41,11 @@ public class ScheduleModel {
         this.date = date;
     }
 
-    public ArrayList<EventModel> getEventModelArrayList() {
-        return eventModelArrayList;
+    public ArrayList<VanueModel> getVanueModelArrayList() {
+        return vanueModelArrayList;
     }
 
-    public void setEventModelArrayList(ArrayList<EventModel> eventModelArrayList) {
-        this.eventModelArrayList = eventModelArrayList;
+    public void setVanueModelArrayList(ArrayList<VanueModel> vanueModelArrayList) {
+        this.vanueModelArrayList = vanueModelArrayList;
     }
 }

@@ -11,6 +11,7 @@
     android:paddingBottom="20dp">
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/text_title"
         style="@style/textBold"
         android:layout_width="match_parent"
