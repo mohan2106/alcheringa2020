@@ -24,6 +24,7 @@ import com.app.alcheringa2020.base.BaseActivity;
 import com.app.alcheringa2020.events.EventsFragment;
 import com.app.alcheringa2020.external.PrefManager;
 import com.app.alcheringa2020.feed.FeedFragment;
+import com.app.alcheringa2020.map.MapList;
 import com.app.alcheringa2020.notification.NotificationFragment;
 import com.app.alcheringa2020.profile.ProfileFragment;
 import com.app.alcheringa2020.schedule.MyScheduleFragment;
@@ -35,6 +36,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static RelativeLayout noti_rlt;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("mohan");
+    FloatingActionButton floatingActionButton;
 
 
     public static final String CHANNEL_ID = "mohan";
@@ -78,6 +81,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         FirebaseMessaging.getInstance().subscribeToTopic("dance");
         FirebaseMessaging.getInstance().subscribeToTopic("fineart");
         FirebaseMessaging.getInstance().subscribeToTopic("general");
+        floatingActionButton = findViewById(R.id.map_floating);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapList.class));
+            }
+        });
         search_image = findViewById(R.id.search_image);
         back_image = findViewById(R.id.back_image);
         noti_image = findViewById(R.id.noti_image);

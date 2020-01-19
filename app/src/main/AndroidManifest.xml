@@ -22,6 +22,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".map.MapList"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_splash" />
@@ -33,7 +34,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".events.EventActivity" />
-        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".search.SearchActivity" />
+
         <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
